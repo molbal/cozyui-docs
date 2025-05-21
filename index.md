@@ -3,16 +3,16 @@
 layout: home
 
 hero:
-  name: "CozyUI Docs"
-  text: "Documentation for CozyUI - Node based LLM workflow editor"
+  name: "CozyUI"
+  text: "Node based AI first workflow editor"
   tagline: My great project tagline
   actions:
     - theme: brand
       text: Markdown Examples
       link: /markdown-examples
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Community Node Development
+      link: /developers/index.md
 
 features:
   - title: Feature A
