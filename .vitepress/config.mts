@@ -6,10 +6,19 @@ export default defineConfig({
   description: "Node based AI first workflow editor",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    outline: {
+      level: [2,6]
+    },
+
+    lastUpdated: true,
+    cleanUrls: true,
+    externalLinkIcon: true,
+
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'User Guide', link: '/users' },
-      { text: 'Developer Guide', link: '/developers' }
+      { text: 'Developer Guide', link: '/developers/dev-index' }
     ],
 
     sidebar: [
@@ -58,7 +67,7 @@ export default defineConfig({
       {
         text: 'Developer Guide',
         items: [
-          { text: 'Starting Point', link: '/developers/index' },
+          { text: 'Starting Point', link: '/developers/dev-index' },
           { text: 'Core Concepts', link: '/developers/core-concepts' },
           { text: 'Execution order', link: '/developers/execution-order' },
           { text: 'Architecture of a node', link: '/developers/node' },

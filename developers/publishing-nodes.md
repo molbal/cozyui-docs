@@ -4,4 +4,6 @@ title: "Publishing nodes"
 
 # Publishing nodes
 
-Content for the "Publishing nodes" page will go here.
+::: tip
+This feature is on the roadmap and is coming in a future CozyUI version.
+:::
