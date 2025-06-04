@@ -73,6 +73,7 @@ export default defineConfig({
           { text: 'Architecture of a node', link: '/developers/node' },
           { text: 'Available helpers', link: '/developers/helpers' },
           { text: 'Triggering leaves', link: '/developers/triggering-leaves' },
+          { text: 'Frontend events', link: '/developers/events' },
           { text: 'Publishing nodes', link: '/developers/publishing-nodes' },
         ]
       },

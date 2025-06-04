@@ -28,6 +28,8 @@ A **Workflow** is the main thing you build in CozyUI. It's like a visual flowcha
 *   **Purpose:** It outlines a series of actions to achieve a specific goal (e.g., "Summarize and Translate News" or "Draft Social Media Posts").
 *   **Visual:** You create workflows by dragging and dropping different action blocks onto a canvas and connecting them.
 
+![Workflow](/assets/concepts-workflow.png)
+
 ## 2. Nodes: The Action Blocks
 
 **Nodes** are the individual action blocks or "steps" in your workflow. Each node is designed to do one specific thing.
@@ -43,6 +45,7 @@ A **Workflow** is the main thing you build in CozyUI. It's like a visual flowcha
 
 You pick the nodes you need and arrange them on your workflow canvas.
 
+![concepts-node.png](/assets/concepts-node.png)
 ## 3. Parameters: Inputs and Outputs for Nodes
 
 Most nodes need some information to do their job, and they usually produce some information as a result. These pieces of information are called **Parameters**.
@@ -58,6 +61,7 @@ What a node *produces* after it's done its job.
 *   *Example:* The "Translate Text" node produces an *output* of the "Translated Text."
 *   This output can then be used by the next node in your workflow.
 
+![concepts-workflow.png](/assets/concepts-parameters.png)
 ## 4. Connections: The Wires Between Actions
 
 **Connections** are the lines or "wires" you draw between nodes on your workflow canvas. They show how information flows from one action step to the next.
@@ -65,6 +69,7 @@ What a node *produces* after it's done its job.
 *   **Purpose:** They tell CozyUI: "Take the *output* from this node and use it as the *input* for that next node."
 *   **Example:** You would draw a connection from the "Summarize Text" node's "Summary Output" to the "Translate Text" node's "Text to Translate Input."
 
+![concepts-connection.png](../assets/concepts-connection.png)
 ## 5. Leaves: Grouping Actions into Mini-Workflows
 
 Sometimes, a part of your workflow might involve several steps that you want to treat as a single, logical unit. Or, you might want to repeat a set of actions multiple times. This is where **Leaves** come in.
@@ -78,7 +83,8 @@ Sometimes, a part of your workflow might involve several steps that you want to 
 *   *Example:* In a customer service workflow, you might have an "If" node that checks if a customer's request is a "Refund" or a "Technical Question."
     *   If it's a refund, it triggers a "Refund Process" Leaf (which contains nodes for checking eligibility, processing the refund, sending a confirmation).
     *   If it's a technical question, it triggers a "Tech Support" Leaf.
-
+    * 
+![concepts-leaf.png](../assets/concepts-leaf.png)
 ## How It All Works Together: An Example
 
 Let's go back to our article summarization task:

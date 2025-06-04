@@ -71,9 +71,7 @@ Let's look at how you might implement prompt chaining in CozyUI.
 4.  **`DisplayText` Node:**
     *   **Input:** Takes `translated_slogan` to display the final result.
 
-::: warning
-TODO screenshot here
-:::
+![Prompt Chaining Example - screenshot](/assets/prompt-chaining-example.png)
 
 ### Example 2: Outline, Review, and Write Document Section
 
@@ -85,13 +83,12 @@ TODO screenshot here
 2.  **`LLM Node` (LLM 1 - Outliner):** Generates a structured outline for the topic.
     *   **Output:** `document_outline`
 3.  **`LLM Node` (LLM 2 - Writer):** Takes the `document_outline` (specifically, perhaps the first point of the outline).
-    *   **Prompt:** "Write an engaging introduction for a blog post based on this first outline point: {first_outline_point}."
+    *   **Prompt:** "Write an engaging introduction for a blog post based on this first outline point: {outline}."
     *   **Output:** `introduction_text`
 4.  **`DisplayText` Node:** Displays `introduction_text`.
 
-::: warning
-TODO screenshot here
-:::
+
+![Prompt Chaining Example 2 - screenshot](/assets/prompt-chaining-example-1.png)
 
 ## General Advice for Prompt Chaining:
 
