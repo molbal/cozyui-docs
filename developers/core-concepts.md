@@ -8,6 +8,11 @@ title: "Core Concepts"
 
 Welcome to CozyUI node development! To create powerful and effective custom nodes, it's important to understand the fundamental concepts that make up a CozyUI workflow.
 
+
+:::tip
+Are you **not** a developer? You might be interested in [Core Concepts in the Getting Started section](/getting-started/concepts)
+:::
+
 ## Workflows
 
 At the highest level, a **Workflow** is the canvas where you design your automated processes. It's a visual representation of a series of tasks, composed of Nodes, Leaves (sub-workflows), and the Connections between them. The ultimate goal of a workflow is to take some input, process it through various steps, and produce a desired output or side-effect.
