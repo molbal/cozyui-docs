@@ -4,11 +4,11 @@ layout: home
 
 hero:
   name: "CozyUI"
-  text: "Node based AI first workflow editor"
-  tagline: My great project tagline
+  text: Node based AI first workflow editor
+  tagline: 
   actions:
     - theme: brand
-      text: Markdown Examples
+      text: Getting started
       link: /markdown-examples
     - theme: alt
       text: Community Node Development
