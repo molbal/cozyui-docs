@@ -4,6 +4,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "CozyUI",
   description: "Node based AI first workflow editor",
+  sitemap: {
+    hostname: 'https://docs.cozyui.org'
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     outline: {
@@ -17,7 +20,7 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'User Guide', link: '/users' },
+      { text: 'Getting Started', link: '/getting-started/installation' },
       { text: 'Developer Guide', link: '/developers/dev-index' }
     ],
 
@@ -29,8 +32,8 @@ export default defineConfig({
           { text: 'Installation', link: '/getting-started/installation' },
           { text: 'Running', link: '/getting-started/running' },
           { text: 'Concepts', link: '/getting-started/concepts' },
+          { text: 'Workflows (Agents)', link: '/getting-started/workflows' },
           { text: 'Configuration', link: '/getting-started/configuration' },
-          { text: 'Workflows/Agents', link: '/getting-started/workflows' },
           { text: 'Deployment for scale', link: '/getting-started/deployment' },
           { text: 'Licensing', link: '/getting-started/license' },
         ]
@@ -38,8 +41,8 @@ export default defineConfig({
       {
         text: 'Integrating CozyUI',
         items: [
-          { text: 'MCP (Model Context Protocol)', link: '/integration/mcp' },
-          { text: 'OpenAI API', link: '/integration/oepnai' },
+          { text: 'Model Context Protocol (MCP)', link: '/integration/mcp' },
+          { text: 'OpenAI API', link: '/integration/openai-api' },
           { text: 'Triggers', link: '/integration/triggers' },
           { text: 'Secret storage', link: '/integration/secrets' },
           { text: 'Observability in CozyUI', link: '/integration/observability' },
@@ -49,12 +52,11 @@ export default defineConfig({
         text: 'Best Practices',
         items: [
           { text: 'Design patterns', link: '/best-practices/design-patters' },
-          { text: 'LLM Tool use', link: '/best-practices/tool-use' },
           { text: 'Prompt Chaining', link: '/best-practices/prompt-chaining' },
           { text: 'Prompt Routing', link: '/best-practices/prompt-routing' },
           { text: 'Prompt Orchestration', link: '/best-practices/prompt-orchestration' },
           { text: 'Evaluation-optimizer', link: '/best-practices/evaluator-optimizer' },
-          { text: 'Agent loop', link: '/best-practices/agent-loop' }
+          { text: 'Agentic Workflows', link: '/best-practices/agentic-workflows' }
         ]
       },
       {
