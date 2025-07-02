@@ -52,7 +52,7 @@ This final step defines how your new agent will be identified and accessed by th
 *   **Name:** This is a unique, slug-like identifier for your agent (e.g., `trip-planner-v1`, `social-media-generator`). This name will be used as the "model" name in API calls, so it should not contain spaces or special characters.
 *   **Description:** Write a clear, detailed description of what your agent does. This is important for your own reference and is also used by other systems (like MCP) to understand the tool's purpose.
 *   **Exposure Toggles:**
-    *   **Expose as OpenAI Model:** This is the most common option. Checking this box makes your workflow available through an [OpenAI-Compatible API](./openai-integration.md).
+    *   **Expose as OpenAI Model:** This is the most common option. Checking this box makes your workflow available through an [OpenAI-Compatible API](/integration/openai-api).
     *   **Expose on MCP Server:** This makes your workflow available to clients using the Model Context Protocol.
     *   **Expose as a Custom Node:** This converts the workflow as a Community Node, which you can reuse in other workflows.
 
