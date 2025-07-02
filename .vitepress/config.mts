@@ -33,9 +33,10 @@ export default defineConfig({
           { text: 'Running', link: '/getting-started/running' },
           { text: 'Concepts', link: '/getting-started/concepts' },
           { text: 'Workflows (Agents)', link: '/getting-started/workflows' },
+          { text: 'Node Execution Order', link: '/getting-started/execution-order' },
           { text: 'Configuration', link: '/getting-started/configuration' },
           { text: 'Deployment for scale', link: '/getting-started/deployment' },
-          { text: 'Licensing', link: '/getting-started/license' },
+          { text: 'Workflow Analytics', link: '/getting-started/observability' },
         ]
       },
       {
@@ -67,6 +68,15 @@ export default defineConfig({
         ]
       },
       {
+        text: 'CozyUI Hub',
+        items: [
+          { text: 'Community Portal', link: '/community/ch-index' },
+          { text: 'Sharing workflows', link: '/community/workflows' },
+          { text: 'Community nodes', link: '/community/nodes' },
+          { text: 'Community support', link: '/community/support' },
+        ]
+      },
+      {
         text: 'Developer Guide',
         items: [
           { text: 'Starting Point', link: '/developers/dev-index' },
@@ -79,6 +89,8 @@ export default defineConfig({
           { text: 'Publishing nodes', link: '/developers/publishing-nodes' },
         ]
       },
+
+      { text: 'Licensing', link: '/getting-started/license' },
     ],
 
     socialLinks: [
