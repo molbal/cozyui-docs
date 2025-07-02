@@ -62,4 +62,6 @@ Once you complete the wizard, your workflow is officially "exposed" and ready to
 
 You've successfully transformed your visual workflow into an intelligent agent! It can now be interacted with conversationally, gathering the "Query Parameters" it needs from a user before executing the full power of your workflow logic with its pre-configured "Fixed Parameters."
 
-To learn how to interact with your newly created agent, please see our guide on **[OpenAI-Compatible API Integration](./openai-integration.md)**.
+::: tip
+To learn how to interact with your newly created agent, please see our guide on **[OpenAI-Compatible API](/integration/openai-api)**.
+:::
