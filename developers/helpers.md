@@ -4,65 +4,90 @@ title: Node Development Toolkit
 
 # Node Development Toolkit
 
-CozyUI provides a comprehensive toolkit to aid in the development of custom nodes. This includes helper functions for defining your node's interface, utilities for managing state and interactivity, and conventions for understanding the execution context.
+CozyUI provides a comprehensive toolkit to aid in the development of custom nodes. This includes helper classes for defining your node's interface, utilities for managing state and interactivity, and conventions for understanding the execution context.
 
 ## Defining Node Parameters
 
-These global helper functions are essential for declaring the inputs and outputs of your node. They are used within your node's static `getInputs()` and `getOutputs()` methods.
+Use the  `ParameterBuilder` class to define node parameters within your node's static `getInputs()` and `getOutputs()` methods.
 
-### `node_inparam()`
+### `ParameterBuilder::input()`
 
-Use `node_inparam()` to define each **input parameter** your node accepts.
+Use `ParameterBuilder::input()` to define each **input parameter** your node accepts.
 
-**Signature:**
-`function node_inparam(string $name, string $className, bool $canLink = true, bool $defaultLink = true, array $specialParameters = []): array`
+**Chained Methods and Defaults:**
 
-**Key Parameters:**
+- **`setType(string $className)`**  
+  Sets the parameter type. The default type is `App\Parameters\Types\TextType::class`.
 
-*   `$name` (string): The internal name for the input (e.g., `source_text`). This is the key in the `$inputs` array your `execute()` method receives.
-*   `$className` (string): The [Parameter Type](/developers/core-concepts.html#parameter-types) class (e.g., `App\Parameters\Types\TextType::class`).
-*   `$canLink` (bool): If `false`, the input must be a static value set by the user and cannot be linked.
-*   `$defaultLink` (bool): If `$canLink` is `true`, determines if the input defaults to a link socket or a static field.
-*   `$specialParameters` (array): For additional configuration like `'default'` values, UI hints (e.g., `'multiline' => true`, `'label' => 'Custom Label'`), or `'options'` for creating dropdowns.
+- **`setDefaultLink(bool $value)`**  
+  Determines if the input defaults to a link socket. The default is `true`.
+
+- **`setProperty(string $key, mixed $value)`**  
+  Sets additional UI or configuration properties (e.g., `'multiline' => true`, `'options' => [...]`).
+
+- **`build()`**  
+  Finalizes and returns the parameter configuration array.
 
 **Example:**
 ```php
 public static function getInputs(): array
 {
     return [
-        node_inparam('api_root', TextType::class, canLink: false), // Static input
-        node_inparam('query', TextType::class, canLink: true, defaultLink: true, specialParameters: ['label' => 'Search Query']),
-        node_inparam('max_results', NumberType::class, canLink: true, defaultLink: false, specialParameters: ['default' => 10]), // Static by default, linkable
+        ParameterBuilder::input('api_root')
+            ->setType(App\Parameters\Types\TextType::class)
+            ->setDefaultLink(false) // static input: cannot link
+            ->build(),
+        ParameterBuilder::input('query')
+            ->setType(App\Parameters\Types\TextType::class)
+            ->build(), // defaults to linkable with TextType
+        ParameterBuilder::input('max_results')
+            ->setType(App\Parameters\Types\NumberType::class)
+            ->setDefaultLink(false)
+            ->setProperty('default', 10) // default value of 10
+            ->build(),
     ];
 }
-```
-::: tip
-Note: parameter type names are not mandatory and can be omitted. This means that `node_inparam('api_root', TextType::class, canLink: false)` is effectively the same as `node_inparam('api_root', TextType::class, false)` - it is just easier to understand the parameter's behaviours if the parameter names are explicitly written out.  
+````
+
+::: details Defaults
+If you do not customize the builder, the following defaults will be applied, for both input and output parameters:
+
+* **Type:** `App\Parameters\Types\TextType::class`
+* **Link behavior:** `canLink = true` and `defaultLink = true`
+* **Properties:** An empty array (`[]`)
 :::
-### `node_outparam()`
 
-Use `node_outparam()` to define each **output parameter** your node produces.
+### `ParameterBuilder::output()`
 
-**Signature:**
-`function node_outparam(string $name, string $className, array $specialParameters = []): array`
+Use `ParameterBuilder::output()` to define each **output parameter** your node produces.
 
-**Key Parameters:**
+**Chained Methods and Defaults:**
 
-*   `$name` (string): The internal name for the output (e.g., `processed_data`). This is the key you'll use when adding data with the `NodeResponseBuilder`.
-*   `$className` (string): The [Parameter Type](/developers/core-concepts.html#_4-parameter-types) class (e.g., `App\Parameters\Types\ArrayType::class`).
-    *   Using `App\Parameters\Types\NodeTriggerType::class` designates this output as an execution trigger for a connected Leaf.
-*   `$specialParameters` (array): For additional configuration, such as a custom `'label'` for the output socket.
+* **`setType(string $className)`**
+  Sets the parameter type. The default type is `App\Parameters\Types\TextType::class`.
+
+* **`build()`**
+  Finalizes and returns the parameter configuration array.
 
 **Example:**
+
 ```php
 public static function getOutputs(): array
 {
     return [
-        node_outparam('results_array', ArrayType::class, ['label' => 'Processed Items']),
-        node_outparam('on_finish_trigger', NodeTriggerType::class),
+        ParameterBuilder::output('results_array')
+            ->setType(App\Parameters\Types\ArrayType::class)
+            ->setProperty('label', 'Processed Items')
+            ->build(),
+        ParameterBuilder::output('on_finish_trigger')
+            ->setType(App\Parameters\Types\NodeTriggerType::class)
+            ->build(),
     ];
 }
 ```
+::: warning
+While it might be tempting to directly use `node_inparam`, `node_outparam` or just an array, using the ParameterBuilder class will result in code that is easier to read.
+:::
 
 ## Building Node Responses
 
@@ -73,7 +98,10 @@ When your node's `execute()` method finishes, it must return an array detailing 
 This global helper function initializes and returns an instance of the `NodeResponseBuilder`.
 
 **Signature:**
-`function node_response(): NodeResponseBuilder`
+
+```php
+function node_response(): NodeResponseBuilder
+```
 
 **`NodeResponseBuilder` Key Methods:**
 
@@ -114,31 +142,31 @@ public function execute(array $inputs): array
 
 ## Managing Node State (Persistence)
 
-Your node (which extends `BaseCozyNode`) can store and retrieve data that persists across its own executions within a workflow run, or even across different nodes in the same workflow. This is handled via cached variables.
+Your node (which extends [BaseCozyNode](https://github.com/molbal/CozyUI/blob/master/app/Contracts/BaseCozyNode.php)) can store and retrieve data that persists across its own executions within a workflow run, or even across different nodes in the same workflow. This is handled via cached variables.
 
 ### Set variable
-`protected function setVariable(array $inputs, VariableScope $scope, string $key, mixed $value): void`
 
-*   Stores `$value` in a scoped cache.
-*   `$inputs`: The `$inputs` array from `execute()` (provides context like Job ID, Node ID).
-*   `$scope` (enum `App\Executor\VariableScope`):
-    *   `WorkflowScope`: Accessible by any node in the current workflow job.
-    *   `NodeScope`: Scoped to the current node instance (uses Job ID + Node ID). The node type will remember this value during the entire workflow, even if the leaf which it is contained in executes again.
-    *   `NodeExecutionContextScope`: Scoped to a specific execution context of the node (uses Job ID + Node ID + Execution Context ID), for very fine-grained state in complex re-entrant scenarios. In simpler terms, if a node persists a variable with this scope, and the leaf is triggered again, this variable is forgotten.
-*   `$key` (string): Your custom identifier for the variable.
-*   `$value` (mixed): The data to store. It needs to be serializable.
+```php
+protected function setVariable(array $inputs, VariableScope $scope, string $key, mixed $value): void
+```
 
-::: tip
-If this is too much and you are unsure what to choose, select `NodeExecutionContextScope`
-:::
+* **Purpose:** Stores `$value` in a scoped cache.
+* **Parameters:**
+
+    * `$inputs`: The `$inputs` array from `execute()` (provides context like Job ID, Node ID).
+    * `$scope`: One of `VariableScope::WorkflowScope`, `VariableScope::NodeScope`, or `VariableScope::NodeExecutionContextScope`.
+    * `$key`: A custom identifier for the variable.
+    * `$value`: The data to store (must be serializable).
 
 ### Read variable
-`protected function getVariable(array $inputs, VariableScope $scope, string $key, mixed $default = null): mixed`
 
-*   Retrieves a variable from the scoped cache. Note: Exactly the same scope needs to be applied when reading a variable when you set it, otherwise the getVariable function will not find it. 
-*   Parameters are the same as `setVariable()`, with `$default` returned if the key isn't found.
+```php
+protected function getVariable(array $inputs, VariableScope $scope, string $key, mixed $default = null): mixed
+```
 
-**Example (Iteration Counter):**
+* **Purpose:** Retrieves a variable from the scoped cache. Returns `$default` if the key isn't found.
+* **Usage Example (Iteration Counter):**
+
 ```php
 // In execute()
 $count = $this->getVariable($inputs, VariableScope::NodeExecutionContextScope, 'iteration_count', 0);
@@ -152,14 +180,19 @@ $this->setVariable($inputs, VariableScope::NodeScope, 'iteration_count', $count 
 Nodes can send real-time updates to their visual representation in the workflow editor.
 
 ### Emit event
-`protected function emitEvent(array $inputs, array $eventData): void`
 
-*   Sends an event from your node's backend logic to its (optional) frontend Blade component.
-*   `$inputs`: The `$inputs` array from `execute()` (provides context like Job ID, Node ID for routing).
-*   `$eventData`: An associative array of data to send. This will be accessible in the `event.detail` of a `workflow.NODE_EVENT` JavaScript listener on the frontend.
-*   **Use Cases:** Displaying progress, logs, intermediate results, or dynamically updating custom UI elements.
+```php
+protected function emitEvent(array $inputs, array $eventData): void
+```
+
+* **Usage:** Sends an event from your node's backend logic to its (optional) frontend Blade component.
+* **Parameters:**
+
+    * `$inputs`: The `$inputs` array from `execute()` (provides context like Job ID, Node ID for routing).
+    * `$eventData`: An associative array of data to send. This will be accessible in the JavaScript `workflow.NODE_EVENT` listener on the frontend.
 
 **Example:**
+
 ```php
 // In execute()
 $this->emitEvent($inputs, ['update' => ['statusText' => 'Task 50% complete']]);
@@ -169,32 +202,31 @@ $this->emitEvent($inputs, ['update' => ['statusText' => 'Task 50% complete']]);
 
 The `$inputs` array passed to your node's `execute()` method contains more than just the data for parameters defined in `getInputs()`. The workflow engine injects special keys (prefixed with `__`) that provide crucial context about the current execution.
 
-*   **`$inputs['__jobId']` (string):** The unique ID for the current workflow job run.
-*   **`$inputs['__nodeId']` (string):** The unique ID of *this specific instance* of your node in the workflow.
-*   **`$inputs['__leafId']` (string|null):** The ID of the Leaf this node is part of, or `null` if it's a top-level node.
-*   **`$inputs['__executionContextState']` (string|null):** An ID for the specific execution context, relevant for `VariableScope::NodeExecutionContextScope`.
-*   **`$inputs['__backtrack']` (bool, optional):** If `true`, this node is being re-executed after a Leaf it triggered (and requested backtracking for) has completed.
+* **`$inputs['__jobId']` (string):** The unique ID for the current workflow job run.
+* **`$inputs['__nodeId']` (string):** The unique ID of *this specific instance* of your node in the workflow.
+* **`$inputs['__leafId']` (string|null):** The ID of the Leaf this node is part of, or `null` if it's a top-level node.
+* **`$inputs['__executionContextState']` (string|null):** An ID for the specific execution context, relevant for `VariableScope::NodeExecutionContextScope`.
+* **`$inputs['__backtrack']` (bool, optional):** If `true`, this node is being re-executed after a Leaf it triggered (and requested backtracking for) has completed.
 
-While you usually don't need these `__` parameters, they are implicitly used by helpers like `$this->emitEvent()` and `$this->setVariable()`. You can also check the backtrack status directly.
+These `__` parameters are implicitly used by helpers like `$this->emitEvent()` and `$this->setVariable()`. You can also check backtrack status directly using:
 
-### Is the node backtracked?
+### Checking for Backtracking
 
-A global helper function to determine if the current execution of your node is a "backtrack" call.
+A global helper function is provided to determine if the current execution is a "backtrack" call:
 
-**Signature:**
-`function node_is_backtracked(array $inputs): bool`
+```php
+function node_is_backtracked(array $inputs): bool
+```
 
-**Parameters:**
-*   `$inputs`: The `$inputs` array passed to your `execute()` method.
-
-**Returns:** `true` if `$inputs['__backtrack']` is set and true, `false` otherwise.
+Returns `true` if `$inputs['__backtrack']` is set and true; otherwise, returns `false`.
 
 **Example:**
+
 ```php
 public function execute(array $inputs): array
 {
     if (node_is_backtracked($inputs)) {
-        // Logic for when the node re-runs after a child Leaf
+        // Logic for node re-execution after a child Leaf completes
         $iteration = $this->getVariable($inputs, VariableScope::NodeScope, 'current_item_index');
         // ... process next item
     } else {
@@ -205,7 +237,9 @@ public function execute(array $inputs): array
 }
 ```
 
-## Laravel Framework helpers
-The backend of CozyUI is built using the Laravel PHP framework. The framework itself comes with handy helper methods, you are encouraged to use them:
-- [Laravel Helpers documentation](https://laravel.com/docs/12.x/helpers)
-- [Laravel HTTP Client](https://laravel.com/docs/12.x/http-client)
+## Laravel Framework Helpers
+
+The backend of CozyUI is built using the Laravel PHP framework. You are encouraged to use Laravel’s helper methods:
+
+* [Laravel Helpers Documentation](https://laravel.com/docs/12.x/helpers)
+* [Laravel HTTP Client](https://laravel.com/docs/12.x/http-client)
