@@ -4,7 +4,10 @@ layout: home
 hero:
   name: "CozyUI"
   text: Node based AI first workflow editor
-  tagline: 
+  tagline:
+  image:
+    src: /assets/logo.png
+    alt: CozyUI Logo
   actions:
     - theme: brand
       text: Getting started

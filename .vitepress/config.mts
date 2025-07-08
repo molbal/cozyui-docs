@@ -2,17 +2,27 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "CozyUI",
-  description: "Node based AI first workflow editor",
+  title: "CozyUI Docs",
+  description: "Node based AI first workflow editor",head: [
+    ['link', { rel: 'icon', type: 'image/png', href: '/assets/favicon-96x96.png', sizes: '96x96' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/assets/favicon.svg' }],
+    ['link', { rel: 'shortcut icon', href: '/assets/favicon.ico' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/assets/apple-touch-icon.png' }],
+    ['link', { rel: 'manifest', href: '/assets/site.webmanifest' }]
+  ],
   sitemap: {
     hostname: 'https://docs.cozyui.org'
   },
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    logo: '/assets/icon-smol.png',
     outline: {
       level: [2,6]
     },
 
+    editLink: {
+      pattern: 'https://github.com/molbal/cozyui-docs/blob/main/:path',
+      text: 'Edit this page on GitHub'
+    },
     lastUpdated: true,
     cleanUrls: true,
     externalLinkIcon: true,
