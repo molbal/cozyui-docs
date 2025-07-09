@@ -152,13 +152,12 @@ Let's imagine an `IterateOverArray` node.
 5.  **Cycle Repeats:** This continues until `$currentIndex` equals `$totalItems`.
 6.  **Loop Completion:** `IterateOverArray` now takes the `else` path, triggers the `after_all_items` Leaf (or path), and does *not* request backtracking, thus ending the loop.
 
-**Key Points for Iterative Nodes:**
+**Best practices for iterative nodes:**
 
-*   **State Management:** Use `$this->setVariable()` and `$this->getVariable()` with `VariableScope::NodeExecutionContextScope` to keep track of your iteration state (e.g., current index, remaining count).
+*   **State Management:** Use `$this->setVariable()` and `$this->getVariable()` with `VariableScope::NodeExecutionContextScope` to keep track of your iteration state (e.g., current index, remaining count), because variables with `VariableScope::NodeExecutionContextScope` scope reset if the leaf it is contained in is triggered again.
 *   **`NodeTriggerType` Output:** Define an output to trigger the "body" of your loop (the Leaf).
 *   **`->trigger()`:** Call this on your `NodeResponseBuilder` to activate the Leaf.
 *   **`->backtrack()`:** This is the magic. Call this on your `NodeResponseBuilder` if you want your node to run again after the triggered Leaf completes.
 *   **Termination Condition:** Ensure your logic has a clear condition to stop iterating and potentially trigger a different "completion" path without backtracking.
-*   **Reset State (Optional):** Consider resetting your node's internal state (like the `iterator_current_index` in the example) when the loop fully completes, especially if the workflow might cause this iterator node to run again later from the beginning.
 
 By understanding how to trigger Leaves and utilize backtracking, you can create sophisticated control flow nodes that manage complex iterative processes within CozyUI workflows.

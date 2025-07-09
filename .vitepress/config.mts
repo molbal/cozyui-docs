@@ -3,18 +3,19 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "CozyUI Docs",
-  description: "Node based AI first workflow editor",head: [
-    ['link', { rel: 'icon', type: 'image/png', href: '/assets/favicon-96x96.png', sizes: '96x96' }],
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/assets/favicon.svg' }],
-    ['link', { rel: 'shortcut icon', href: '/assets/favicon.ico' }],
-    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/assets/apple-touch-icon.png' }],
-    ['link', { rel: 'manifest', href: '/assets/site.webmanifest' }]
+  description: "Node based AI first workflow editor",
+  head: [
+   ['link', { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' }],
+   ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+   ['link', { rel: 'shortcut icon', href: '/favicon.ico' }],
+   ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
+   ['link', { rel: 'manifest', href: '/site.webmanifest' }]
   ],
   sitemap: {
     hostname: 'https://docs.cozyui.org'
   },
   themeConfig: {
-    logo: '/assets/icon-smol.png',
+    logo: '/icon-smol.png',
     outline: {
       level: [2,6]
     },
@@ -100,7 +101,8 @@ export default defineConfig({
         ]
       },
 
-      { text: 'Licensing', link: '/getting-started/license' },
+      { text: 'Support', link: '/general/support' },
+      { text: 'Licensing', link: '/general/license' },
     ],
 
     socialLinks: [
@@ -112,6 +114,11 @@ export default defineConfig({
 
     search: {
       provider: 'local'
+    },
+
+    footer: {
+      message: 'Free and open source software released under the Apache License 2.0.',
+      copyright: 'Copyright © 2025 <a href="https://www.linkedin.com/in/balint-molnar/" target="_blank">Bálint Molnár-Kaló</a'
     }
   }
 })

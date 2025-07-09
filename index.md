@@ -6,7 +6,7 @@ hero:
   text: Node based AI first workflow editor
   tagline:
   image:
-    src: /assets/logo.png
+    src: /logo.png
     alt: CozyUI Logo
   actions:
     - theme: brand
@@ -25,7 +25,7 @@ features:
     details: Go beyond simple chains. Empower a Large Language Model to act as an agent that can reason, plan, and use other nodes or even workflows and oter agents to dynamically solve complex, open-ended problems in a continuous loop.
     link: /best-practices/agentic-workflows
     icon: 🤖
-  - title: Expose Workflows as APIs
+  - title: OpenAI-compliant API
     details: Instantly turn any workflow into a conversational agent accessible via a standard, OpenAI-compatible API. Features automatic, multi-turn conversation to gather necessary inputs before execution.
     icon: 🖥️
     link: /integration/openai-api
@@ -51,7 +51,7 @@ features:
     icon: 📊
   - title: Free and Open Source
     details: CozyUI is completely free and open source under the permissive Apache 2.0 license. Self-host, modify, and integrate it without vendor lock-in. Inspect the code, contribute, and be part of a transparent, community-driven platform. Need dedicated support? Enterprise licensing is available.
-    link: /getting-started/license
+    link: /general/license
     icon: 🎁
 ---
 
